@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :user_rooms
+  has_many :rooms #post index
   has_many :rooms, through: :user_rooms
 
   # Include default devise modules. Others available are:
