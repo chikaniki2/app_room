@@ -4,7 +4,12 @@ class RoomsController < ApplicationController
   end
 
   def new
-    @room = Room.new
+    if !user_signed_in?
+      redirect_to "/users/sign_in"
+    else
+      @room = Room.new
+      @user = current_user
+    end
   end
  
   def create
@@ -18,11 +23,12 @@ class RoomsController < ApplicationController
   end
  
   def show
-    @room = Room.find(params[:id]) #paramsはGETで取得した値。User.find(1)等になる。単体レコードの抽出。
+    @room = Room.find(params[:id])
   end
  
   def edit
     @room = Room.find(params[:id])
+    @user = current_user
   end
  
   def update
@@ -42,10 +48,15 @@ class RoomsController < ApplicationController
     redirect_to :rooms
   end
 
+  # 登録した部屋一覧
+  def post
+    @rooms = Room.where(user_id: current_user.id)
+  end
 
   private
     # create,updateの共通パラメータ（ストロング）
     def def_params
       params.require(:room).permit(:address, :name, :description, :price, :user_id)
     end
+
 end

@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   root 'rooms#index'
-  resources :rooms
+
+  resources :rooms do
+    get :post, on: :collection
+  end
+
   resources :user_rooms
+
   devise_for :users, :controllers => {
     :confirmations => 'users/confirmations',
     :registrations => 'users/registrations',

@@ -1,0 +1,36 @@
+<h2>詳細</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>address</th>
+      <th>name</th>
+      <th>desc</th>
+      <th>price</th>
+      <th>更新日</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td><%= @room.address %></td>
+        <td><%= @room.name %></td>
+        <td><%= @room.description %></td>
+        <td><%= @room.price %></td>
+        <td><%= @room.updated_at.to_s(:datetime_jp_t) %></td>
+      </tr>
+  </tbody>
+</table>
+
+
+<div>
+  <ul>
+    <li><%= link_to "一覧に戻る", :rooms %></li>
+    <% if user_signed_in? %>
+      <% if @room.user_id == current_user.id %>
+	      <li><%= link_to "編集", [:edit, @room] %></li>
+	      <li><%= link_to "削除", @room, method: :delete, data: { confirm: "本当に削除しますか？" } %></li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
