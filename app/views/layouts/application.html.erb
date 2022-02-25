@@ -10,6 +10,14 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
+  <header>
+  <%= form_with url: search_rooms_path, method: :get, local: true do |f| %>
+      <%= f.text_field :area, placeholder: "エリア"%>
+      <%= f.text_field :name, placeholder: "施設名"%>
+      <%= f.submit :search %>
+  <% end %>
+  </header>
+
   <body>
     <%= yield %>
   </body>

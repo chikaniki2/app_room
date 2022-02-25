@@ -1,0 +1,40 @@
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>postuserID</th>
+      <th>name</th>
+      <th>更新日</th>
+      <th>確認</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @rooms.size == 0 %>
+      <tr>
+        <td colspan="9">現在登録はありません</td>
+      </tr>
+    <% end %>
+
+    <% @rooms.each do |room| %>
+      <tr>
+        <td><%= room.id %></td>
+        <td><%= room.user_id %></td>
+        <td><%= room.name %></td>
+        <td><%= room.updated_at.to_s(:datetime_jp_t) %></td>
+
+        <td>
+          <%= link_to "確認", room %>
+        </td>
+        <td>
+          <%= link_to "編集", [:edit, room] %>
+        </td>
+        <td>
+          <%= link_to "削除", room, method: :delete, data: { confirm: "本当に削除しますか？" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

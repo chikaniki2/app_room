@@ -53,6 +53,11 @@ class RoomsController < ApplicationController
     @rooms = Room.where(user_id: current_user.id)
   end
 
+  # 部屋検索結果
+  def search
+      @rooms = Room.where('address LIKE ?', "%#{params[:area]}%").where('name LIKE ?', "%#{params[:name]}%")
+  end
+
   private
     # create,updateの共通パラメータ（ストロング）
     def def_params
