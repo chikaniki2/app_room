@@ -51,12 +51,26 @@ class RoomsController < ApplicationController
   # 登録した部屋一覧
   def post
     @rooms = Room.where(user_id: current_user.id)
+    #@rooms = current_user.rooms
   end
 
   # 部屋検索結果
   def search
       @rooms = Room.where('address LIKE ?', "%#{params[:area]}%").where('name LIKE ?', "%#{params[:name]}%")
   end
+
+  # 予約一覧
+  def reservations
+    @reservations = UserRoom.where(user_id: current_user.id)
+
+#    @reservations.each_with_index do |reservation, i|
+ #     reservation['room'] = Room.find(reservation.room_id)
+  #    reservations[i] = reservation # 代入
+      # rooms.push(Room.find(id: reservation.room_id)) # 予約レコードを元に、部屋情報を配列に格納
+   # end
+    # @rooms = rooms
+  end
+
 
   private
     # create,updateの共通パラメータ（ストロング）

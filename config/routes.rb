@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :rooms do
     get :post, on: :collection
     get :search, on: :collection
+    get :reservations, on: :collection
   end
 
   resources :user_rooms

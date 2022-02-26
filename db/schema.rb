@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_070835) do
   create_table "user_rooms", force: :cascade do |t|
     t.date "date_start"
     t.date "date_end"
+    t.integer "member"
     t.integer "price"
     t.integer "user_id"
     t.integer "room_id"

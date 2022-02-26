@@ -1,0 +1,30 @@
+<h2>予約内容の確認</h2>
+
+<%= form_with model: @user_room, local: true do |f| %>
+  
+  <% #=render "shared/error", obj: @room %>
+
+  <div>
+    <%= f.label :date_start ,"チェックイン" %><br>
+    <%= f.text_field :date_start ,value:@param[:date_start] %><br>
+
+    <%= f.label :date_end ,"チェックアウト" %><br>
+    <%= f.text_field :date_end ,value:@param[:date_end] %><br>
+<!--数字だけに制限する方法調べる-->
+    <%= f.label :member ,"利用人数" %><br>
+    <%= f.text_field :member ,value:@param[:member] %><br>
+
+    <%= f.label :price ,"宿泊費" %><br>
+    <%= f.text_field :price ,value:@param[:price] %><br>
+
+    <%= f.hidden_field :user_id, value:@param[:user_id] %>
+    <%= f.hidden_field :room_id, value:@param[:room_id] %>
+
+  </div>
+  <div>
+    <ul>
+      <li><%= f.submit "予約を確定する"%></li>
+      <li><%= link_to "一覧に戻る", :rooms %></li>
+    </ul>
+  </div>
+<% end %>

@@ -1,5 +1,13 @@
 <h2>詳細</h2>
 
+<% if flash[:alert] %>
+  <ul class="flash_alert">
+  <% flash[:alert].each do |alert| %>
+    <li><%= alert %></li>
+  <% end %>
+  </ul>
+<% end %>
+
 <table>
   <thead>
     <tr>
@@ -31,6 +39,36 @@
 	      <li><%= link_to "編集", [:edit, @room] %></li>
 	      <li><%= link_to "削除", @room, method: :delete, data: { confirm: "本当に削除しますか？" } %></li>
       <% end %>
+
+        # YOYAKU FORM
+        <%= form_with model: @user_room, :url=>{ :controller=>"user_rooms", :action=>"new"} , method: :get do |f| %>
+          <%#= render "shared/error", obj: @room %>
+
+          <table>
+            <tr>
+              <th><%= f.label :date_start ,"チェックイン" %></th>
+              <td><%= f.date_field :date_start %></td>
+            </tr>
+            <tr>
+              <th><%= f.label :date_end ,"チェックアウト" %></th>
+              <td><%= f.date_field :date_end %></td>
+            </tr>
+            <tr>
+              <th><%= f.label :member ,"宿泊人数" %></th>
+              <td><%= f.text_field :member %></td>
+            </tr>
+          </table>
+          
+          <%= f.hidden_field :price, value:@room.price %>
+          <%= f.hidden_field :user_id, value:current_user.id %>
+          <%= f.hidden_field :room_id, value:@room.id %>
+
+          <div>
+            <ul>
+              <li><%= f.submit "予約する"%></li>
+            </ul>
+          </div>
+        <% end %>
     <% end %>
   </ul>
 </div>
