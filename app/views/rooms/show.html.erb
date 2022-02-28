@@ -65,9 +65,28 @@
 
           <div>
             <ul>
-              <li><%= f.submit "予約する"%></li>
+              <li><%= f.submit "予約する", id:"submitbtn" %></li>
             </ul>
           </div>
+
+          <!--入力補助-->
+          <script>
+            if (sessionStorage.getItem("reservations_inputs")!=null){
+              var inputs = JSON.parse(sessionStorage.getItem("reservations_inputs"));
+              document.getElementById("date_start").value = inputs['date_start'];
+              document.getElementById("date_end").value = inputs['date_end'];
+              document.getElementById("member").value = inputs['member'];
+            }
+
+            document.getElementById('submitbtn').addEventListener('click',function(){
+              var inputs = {
+                'date_start' : document.getElementById("date_start").value,
+                'date_end' : document.getElementById("date_end").value,
+                'member' : document.getElementById("member").value
+              }
+              sessionStorage.setItem('reservations_inputs', JSON.stringify(inputs));
+            });
+          </script>
         <% end %>
     <% end %>
   </ul>

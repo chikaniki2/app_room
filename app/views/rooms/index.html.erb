@@ -27,7 +27,6 @@
     <% @rooms.each do |room| %>
       <tr>
         <td><%= room.id %></td>
-        <td><%= room.user_id %></td>
         <td><%= room.name %></td>
         <td><%= room.updated_at.to_s(:datetime_jp_t) %></td>
 
@@ -59,3 +58,8 @@
 
 <br>
 <%= link_to "予約一覧", "rooms/reservations/" %>
+
+<br>
+<%= link_to "アカウント", "users/account/" %>
+<br>
+<%= link_to "プロフィール", "users/profile/" %>

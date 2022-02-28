@@ -23,8 +23,14 @@
   </div>
   <div>
     <ul>
-      <li><%= f.submit "予約を確定する"%></li>
-      <li><%= link_to "一覧に戻る", :rooms %></li>
+      <li><%= f.submit "予約を確定する",id:"submitbtn" %></li>
+      <li><%= link_to "戻る", :back %></li>
     </ul>
   </div>
+  
+  <script>
+    document.getElementById('submitbtn').addEventListener('click',function(){
+      sessionStorage.removeItem('reservations_inputs');
+    });
+  </script>
 <% end %>

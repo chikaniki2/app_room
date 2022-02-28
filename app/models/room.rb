@@ -3,11 +3,9 @@ class Room < ApplicationRecord
   has_many :user_rooms
   has_many :users, through: :user_rooms
 
-  validates :user_id, presence: true
-  validates :room_id, presence: true
-  validates :date_start, presence: true
-  validates :date_end, presence: true
-  validates :member, presence: true
+  validates :name, presence: true
+  validates :description, presence: true
   validates :price, presence: true
+  validates :address, presence: true
 
 end

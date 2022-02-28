@@ -16,5 +16,10 @@ Rails.application.routes.draw do
     :passwords => 'users/passwords'
   }
 
+  resources :users do
+    get :profile, on: :collection
+    get :account, on: :collection
+  end
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

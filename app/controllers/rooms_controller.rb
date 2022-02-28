@@ -14,7 +14,7 @@ class RoomsController < ApplicationController
  
   def create
     @room = Room.new(def_params)
-	  if @room.save!
+	  if @room.save
 	    flash[:notice] = "新規登録しました"
 	    redirect_to :rooms
 	  else
