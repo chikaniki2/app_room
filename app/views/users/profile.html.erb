@@ -1,27 +1,51 @@
-<h2>新規作成</h2>
 
-<% if  flash[:notice] %>
-    <p class="notice"><%= flash[:notice] %>
-<% end %>
+<div id="account">
+  <div class="row h-100">
 
-<%= form_with model: @user, local: true do |f| %>
-  <% #=render "shared/error", obj: @user %>
-  <table>
-    <tr>
-      <th><%= f.label :name ,"名前" %></th>
-      <td><%= f.text_field :name ,value:@user.name%></td>
-    </tr>
+    <div class="col-2 pannel_e">
+		  <a href="/users/account/" class="profile-menu">アカウント</a>
+		  <a href="/users/profile/" class="profile-menu profile-menu_active">プロフィール</a>
+	  </div>
+	
+    <div class="col-4">
+      <div class="row p-2 pt-5">
+        <h3>プロフィール</h3>
+      </div>
+      
+      <% if  flash[:notice] %>
+        <div class="alert alert-success"><%= flash[:notice] %></div>
+      <% elsif flash[:alert] %>
+        <div class="alert alert-danger"><%= flash[:alert] %></div>
+      <% end %>
 
-    <tr>
-      <th><%= f.label :description ,"自己紹介" %></th>
-      <td><%= f.text_area :description, value:@user.description, class:'aaa' %></td>
-    </tr>
-  </table>
-  
-  <div>
-    <ul>
-      <li><%= f.submit "更新する"%></li>
-    </ul>
+      <%= form_with model: @user, local: true do |f| %>
+        
+        <div class="row p-3">
+          <div class="col">
+            <%= f.label :name ,"名前" %>
+            <span class="badge bg-danger">必須</span>
+          </div>
+          <div class="col-8">
+            <%= f.text_field :name ,value:@user.name,  class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="row p-3">
+          <div class="col">
+            <%= f.label :description ,"自己紹介" %>
+            <span class="badge bg-danger">必須</span>
+          </div>
+          <div class="col-8">
+            <%= f.text_area :description, value:@user.description, class:'form-control' %>
+          </div>
+        </div>
+
+        <div class="row p-3">
+          <div class="col">
+            <%= f.submit "更新する", class: "btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
-<% end %>
-
+</div>

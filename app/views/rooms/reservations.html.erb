@@ -1,51 +1,48 @@
-<% if flash[:notice] %>
-  <p class="alert alert__success"><%= flash[:notice] %>
-<% elsif flash[:alert]%>
-  <p class="alert alert__delete"><%= flash[:alert] %>
-<% end %>
-
-# 予約しました のメッセージ
+<div id="main">
+  <% if flash[:notice] %>
+    <div class="alert alert__success"><%= flash[:notice] %></div>
+  <% elsif flash[:alert]%>
+    <div class="alert alert__delete"><%= flash[:alert] %></div>
+  <% end %>
+  
+  <h2>予約一覧</h2>
 # 予約順に並べる
+  <% if @reservations.size == 0 %>
+    <p>現在登録はありません</p>
+  <% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>施設名</th>
-      <th>住所</th>
-      <th>チェックイン</th>
-      <th>チェックアウト</th>
-      <th>宿泊人数</th>
-      <th>宿泊費用</th>
-      <th>施設詳細</th>
-      <th>予約キャンセル</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% if @reservations.size == 0 %>
-      <tr>
-        <td colspan="9">現在登録はありません</td>
-      </tr>
-    <% end %>
-
+  <div class="row row-cols-4 roomlist">
     <% @reservations.each do |reservation| %>
-    <% room = Room.find_by(id: reservation.room_id) %>
-      <tr>
-        <% if room != nil %>
-          <td><%= room.name %></td>
-          <td><%= room.address %></td>
-        <% else %>
-          <td>削除されたホテル</td>
-          <td>-</td>
-        <% end %>
-      
-        <td><%= reservation.date_start.to_s(:datetime_jp_t) %></td>
-        <td><%= reservation.date_end.to_s(:datetime_jp_t) %></td>
-        <td><%= reservation.member %></td>
-        <td><%= reservation.price %></td>
-        <td><%= link_to "確認", room %></td>
-        <td><%= link_to "cancel", user_room_path(id:reservation.id), method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <% room = Room.find_by(id: reservation.room_id) %>
+        <%
+        if room != nil
+          room_name = room.name
+          room_address = room.address
+        else
+          room_name = "削除されたホテル"
+          room_address = "-"
+        end
+        %>
+      <div class="col">
+        <div class="card h-100">
+          <img src="/assets/slideshow_01_s.jpg" alt="" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title"><%= room_name %></h5>
+            <p class="card-text room-address"><%= room_address %></p>
+            <p class="card-text">宿泊人数：<%= reservation.member %>人</p>
+            <p class="card-text">
+              <%= (reservation.date_end.to_date - reservation.date_start.to_date).to_i %>泊：
+              <%= reservation.price.to_s(:delimited) %>円
+            </p>
+            <p class="card-text">チェックイン：<%= reservation.date_start.to_s(:datetime_jp_t) %><br>
+            チェックアウト：<%= reservation.date_end.to_s(:datetime_jp_t) %></p>
+          </div>
+          <div class="card-body">
+            <%= link_to "部屋詳細", room, class: "card-link" %>
+            <%= link_to "キャンセル", user_room_path(id:reservation.id), method: :delete, data: { confirm: "本当にキャンセルしますか？" },  class: "card-link" %>
+          </div>
+        </div>
+      </div>
+    <% end #each end %>
+  </div><!--roomlist end-->
+</div><!--main end-->

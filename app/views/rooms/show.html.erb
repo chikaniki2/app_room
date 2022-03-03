@@ -1,93 +1,76 @@
-<h2>詳細</h2>
-
-<% if flash[:alert] %>
-  <ul class="flash_alert">
-  <% flash[:alert].each do |alert| %>
-    <li><%= alert %></li>
-  <% end %>
-  </ul>
-<% end %>
-
-<table>
-  <thead>
-    <tr>
-      <th>address</th>
-      <th>name</th>
-      <th>desc</th>
-      <th>price</th>
-      <th>更新日</th>
-    </tr>
-  </thead>
-
-  <tbody>
-      <tr>
-        <td><%= @room.address %></td>
-        <td><%= @room.name %></td>
-        <td><%= @room.description %></td>
-        <td><%= @room.price %></td>
-        <td><%= @room.updated_at.to_s(:datetime_jp_t) %></td>
-      </tr>
-  </tbody>
-</table>
-
-
-<div>
-  <ul>
-    <li><%= link_to "一覧に戻る", :rooms %></li>
-    <% if user_signed_in? %>
-      <% if @room.user_id == current_user.id %>
-	      <li><%= link_to "編集", [:edit, @room] %></li>
-	      <li><%= link_to "削除", @room, method: :delete, data: { confirm: "本当に削除しますか？" } %></li>
+<div id="main">
+  <% if flash[:alert] %>
+    <ul class="alert alert-danger">
+      <% flash[:alert].each do |alert| %>
+        <li><%= alert %></li>
       <% end %>
+    </ul>
+  <% end %>
 
-        # YOYAKU FORM
+  <h2><%= @room.name %></h2>
+  <p><%= @room.address %></p>
+
+  <div class="row">
+    <div class="col">
+      <img class="img-fluid pb-3" src="/assets/slideshow_01_s" alt="roomimage">
+	    <p>1泊1人あたり:<%= @room.price.to_s(:delimited) %>円</p>
+      <p><%= @room.description %></p>
+	  </div>
+	
+	  <div class="col-3 pannel_e">
+      <h4 class="pt-3 pb-3">予約する</h4>
+    
+      <% if user_signed_in? %>
         <%= form_with model: @user_room, :url=>{ :controller=>"user_rooms", :action=>"new"} , method: :get do |f| %>
-          <%#= render "shared/error", obj: @room %>
-
-          <table>
-            <tr>
-              <th><%= f.label :date_start ,"チェックイン" %></th>
-              <td><%= f.date_field :date_start %></td>
-            </tr>
-            <tr>
-              <th><%= f.label :date_end ,"チェックアウト" %></th>
-              <td><%= f.date_field :date_end %></td>
-            </tr>
-            <tr>
-              <th><%= f.label :member ,"宿泊人数" %></th>
-              <td><%= f.text_field :member %></td>
-            </tr>
-          </table>
+        <%#= render "shared/error", obj: @room %>
+          <div class="pb-3">
+            <%= f.label :date_start ,"チェックイン" %>
+            <%= f.date_field :date_start, class:"form-control" %>
+          </div>
+          <div class="pb-3">
+            <%= f.label :date_end ,"チェックアウト" %>
+            <%= f.date_field :date_end, class:"form-control" %>
+          </div>
+          <div class="pb-4">
+            <%= f.label :member ,"利用人数" %>
+            <%= f.number_field :member, class:"form-control" %>
+          </div>
           
           <%= f.hidden_field :price, value:@room.price %>
           <%= f.hidden_field :user_id, value:current_user.id %>
           <%= f.hidden_field :room_id, value:@room.id %>
 
           <div>
-            <ul>
-              <li><%= f.submit "予約する", id:"submitbtn" %></li>
-            </ul>
+            <%= f.submit "確認画面へ", id:"submitbtn" , class: "btn btn-primary form-control"%>
           </div>
 
           <!--入力補助-->
-          <script>
-            if (sessionStorage.getItem("reservations_inputs")!=null){
-              var inputs = JSON.parse(sessionStorage.getItem("reservations_inputs"));
-              document.getElementById("date_start").value = inputs['date_start'];
-              document.getElementById("date_end").value = inputs['date_end'];
-              document.getElementById("member").value = inputs['member'];
-            }
-
-            document.getElementById('submitbtn').addEventListener('click',function(){
-              var inputs = {
-                'date_start' : document.getElementById("date_start").value,
-                'date_end' : document.getElementById("date_end").value,
-                'member' : document.getElementById("member").value
+            <script>
+              if (sessionStorage.getItem("reservations_inputs")!=null){
+                var inputs = JSON.parse(sessionStorage.getItem("reservations_inputs"));
+                document.getElementById("date_start").value = inputs['date_start'];
+                document.getElementById("date_end").value = inputs['date_end'];
+                document.getElementById("member").value = inputs['member'];
               }
-              sessionStorage.setItem('reservations_inputs', JSON.stringify(inputs));
-            });
-          </script>
-        <% end %>
-    <% end %>
-  </ul>
+
+              document.getElementById('submitbtn').addEventListener('click',function(){
+                var inputs = {
+                  'date_start' : document.getElementById("date_start").value,
+                  'date_end' : document.getElementById("date_end").value,
+                  'member' : document.getElementById("member").value
+                }
+                sessionStorage.setItem('reservations_inputs', JSON.stringify(inputs));
+              });
+            </script>
+          <!--入力補助end-->
+        <% end #form end %>
+      <% else %>
+        <%# if not login %>
+        <p>予約にはログインが必要です。</p>
+        <%= link_to "ログイン", new_user_session_path, class: 'btn btn-primary' %>
+      <% end #if login end %>
+      
+    </div><!--pannel_e end-->
+
+  </div>
 </div>

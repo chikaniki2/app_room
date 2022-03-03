@@ -1,36 +1,51 @@
-<h2>予約内容の確認</h2>
+<div id="main">
+  <div id="pannel_center" class="pannel_e">
+    <h4 class="pb-4">予約内容の確認</h4>
 
-<%= form_with model: @user_room, local: true do |f| %>
-  
-  <% #=render "shared/error", obj: @room %>
+    <%= form_with model: @user_room, local: true do |f| %>
+      <%#=render "shared/error", obj: @room %>
+      <div class="w-75 m-auto text-start">
 
-  <div>
-    <%= f.label :date_start ,"チェックイン" %><br>
-    <%= f.text_field :date_start ,value:@param[:date_start] %><br>
+        <div class="row pb-4">
+          <%= f.label :date_start ,"チェックイン" %>
+          <%= f.text_field :date_start ,value:@param[:date_start], class: "form-control", readonly: true %>
+        </div>
 
-    <%= f.label :date_end ,"チェックアウト" %><br>
-    <%= f.text_field :date_end ,value:@param[:date_end] %><br>
-<!--数字だけに制限する方法調べる-->
-    <%= f.label :member ,"利用人数" %><br>
-    <%= f.text_field :member ,value:@param[:member] %><br>
+        <div class="row pb-4">
+          <%= f.label :date_end ,"チェックアウト" %>
+          <%= f.text_field :date_end ,value:@param[:date_end], class: "form-control", readonly: true %>
+        </div>
 
-    <%= f.label :price ,"宿泊費" %><br>
-    <%= f.text_field :price ,value:@param[:price] %><br>
+        <div class="row pb-4">
+          <%= f.label :member ,"利用人数" %>
+          <%= f.text_field :member ,value:@param[:member], class: "form-control", readonly: true %>
+        </div>
+        
+        <div class="row pb-4">
+          <% day = (@param[:date_end].to_date - @param[:date_start].to_date).to_i %>
+          <%= f.label :price ,"宿泊費：#{day}泊分" %>
+          <%= f.text_field :price ,value:@param[:price], class: "form-control", readonly: true %>
+        </div>
+        
+        <%= f.hidden_field :user_id, value:@param[:user_id] %>
+        <%= f.hidden_field :room_id, value:@param[:room_id] %>
 
-    <%= f.hidden_field :user_id, value:@param[:user_id] %>
-    <%= f.hidden_field :room_id, value:@param[:room_id] %>
+        <div class="row pb-5">
+          <%= f.submit "予約を確定する",id:"submitbtn", class: "btn btn-primary" %>
+        </div>
+
+        <div class="row pb-5">
+          <%= link_to "戻る", :back %>
+        </div>
+
+     </div>
+    <% end %>
+
+    <script>
+      document.getElementById('submitbtn').addEventListener('click',function(){
+        sessionStorage.removeItem('reservations_inputs');
+      });
+    </script>
 
   </div>
-  <div>
-    <ul>
-      <li><%= f.submit "予約を確定する",id:"submitbtn" %></li>
-      <li><%= link_to "戻る", :back %></li>
-    </ul>
-  </div>
-  
-  <script>
-    document.getElementById('submitbtn').addEventListener('click',function(){
-      sessionStorage.removeItem('reservations_inputs');
-    });
-  </script>
-<% end %>
+</div>

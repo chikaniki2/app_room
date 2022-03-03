@@ -1,40 +1,39 @@
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>postuserID</th>
-      <th>name</th>
-      <th>更新日</th>
-      <th>確認</th>
-      <th>編集</th>
-      <th>削除</th>
-    </tr>
-  </thead>
 
-  <tbody>
+<div id="main">
+  <%
+  if params[:area]!=""
+    area = "『#{params[:area]}』"
+  end
+  if params[:name]!=""
+    name = "『#{params[:name]}』"
+  end
+  %>
+  <% if params[:area]!="" || params[:name]!="" %>
+    <h2><%= area %><%= name %>の検索結果</h2>
+  <% else %>
+    <h2>部屋一覧</h2>
+  <% end %>
+  
+  <div class="row row-cols-4 roomlist">
+  
     <% if @rooms.size == 0 %>
-      <tr>
-        <td colspan="9">現在登録はありません</td>
-      </tr>
+      <p>現在登録はありません</p>
     <% end %>
 
     <% @rooms.each do |room| %>
-      <tr>
-        <td><%= room.id %></td>
-        <td><%= room.user_id %></td>
-        <td><%= room.name %></td>
-        <td><%= room.updated_at.to_s(:datetime_jp_t) %></td>
-
-        <td>
-          <%= link_to "確認", room %>
-        </td>
-        <td>
-          <%= link_to "編集", [:edit, room] %>
-        </td>
-        <td>
-          <%= link_to "削除", room, method: :delete, data: { confirm: "本当に削除しますか？" } %>
-        </td>
-      </tr>
+      <div class="col">
+	      <a href="/rooms/<%= room.id %>" class="card h-100">
+  	      <img src="/assets/slideshow_01_s.jpg" alt="roomthum" class="card-img-top">
+	        <div class="card-body">
+  	        <h5 class="card-title"><%= room.name %></h5>
+		        <p class="card-text room-address"><%= room.address %></p>
+		        <p class="card-text"><%= room.description %></p>
+            <p class="card-text">1泊1人あたり:<%= room.price.to_s(:delimited) %>円</p>
+            <p class="card-text room-address">登録者：<%= room.user_id %></p>
+	        </div>
+	      </a>
+	    </div>
     <% end %>
-  </tbody>
-</table>
+
+  </div>
+</div>

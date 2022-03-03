@@ -1,0 +1,126 @@
+/*
+----------------------
+Start ハンバーガーメニュー
+----------------------
+*/
+
+/* Start ナビゲーション */
+.headerNav {
+  position: fixed;
+  right: -250px;/*右側に隠しておきます*/
+  top: 0;
+  width: 250px;
+  height: 100vh;
+  padding-top: 40px;
+  /*background-color: rgba(157, 237, 248, 0.8);*/
+background: #EEE;
+  -webkit-transition: all .6s;
+  transition: all .6s;
+  z-index: 20;
+  overflow-y: auto;
+}
+.navList {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  display: block;
+}
+.navItem {
+  padding: 1rem 1rem 0;
+}
+.navItem a {
+  display: block;
+  border-bottom: 1px solid #eee;
+  color: #707070;
+  padding: 1em;
+  width: 100%;
+  margin: 0 auto;
+}
+/* End ナビゲーション */
+
+/* Start ハンバーガーボタン(三本線の実装) */
+.hamburger_btn {
+  position: absolute;/*.headerNavOuterを基準にして、絶対配置*/
+  right: 0;
+  top: 0;
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  z-index: 30;
+}
+.hamburger_line {
+  position: absolute;/*.headerNavOuterを基準にして、絶対配置*/
+  left: 8px;
+  width: 25px;
+  height: 2px;
+  /*background-color: #111;*/
+background: #FFF;
+  -webkit-transition: all .6s;
+  transition: all .6s;
+}
+.nav-open .hamburger_line{
+background: #333;
+}
+
+.hamburger_line_1 {
+  top: 20px;
+}
+.hamburger_line_2 {
+  top: 26px;
+}
+.hamburger_line_3 {
+  top: 32px;
+}
+/* End ハンバーガーボタン(三本線の実装) */
+
+/*ハンバーガーメニュをクリックした後に現れる半透明の背景*/
+.black-bg {
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  background-color: #000;
+  opacity: 0;
+  visibility: hidden;/* 非表示にしておきます */
+  -webkit-transition: all .6s;
+  transition: all .6s;
+  cursor: pointer;
+}
+
+/* Start ハンバーガーボタンをクリックした際の動き */
+/* ナビゲーションが現れる */
+.nav-open .headerNav {
+  right: 0;
+box-shadow: -10px 0px 20px 0px rgba(10,10,10,0.25);
+}
+
+/* 半透明の背景を表示させます。 */
+.nav-open .black-bg {
+  opacity: .8;
+  visibility: visible;
+}
+
+/* 三本線のハンバーガーを、バッテンにします */
+.nav-open .hamburger_line_1 {
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  top: 25px;
+}
+.nav-open .hamburger_line_2 {
+  width: 0;
+  left: 50%;
+}
+.nav-open .hamburger_line_3 {
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  top: 25px;
+}
+/* End ハンバーガーボタンをクリックした際の動き */
+/*
+----------------------
+End ハンバーガーメニュー
+----------------------
+*/

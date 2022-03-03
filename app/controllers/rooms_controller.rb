@@ -48,28 +48,38 @@ class RoomsController < ApplicationController
     redirect_to :rooms
   end
 
-  # 登録した部屋一覧
-  def post
-    @rooms = Room.where(user_id: current_user.id)
-    #@rooms = current_user.rooms
-  end
-
   # 部屋検索結果
   def search
-      @rooms = Room.where('address LIKE ?', "%#{params[:area]}%").where('name LIKE ?', "%#{params[:name]}%")
+    # エリアと部屋名から検索
+    # @rooms = Room.where('address LIKE ?', "%#{params[:area]}%").where('name LIKE ?', "%#{params[:name]}%")
+    
+    # エリア、部屋名、説明文から検索
+    @rooms = Room.where('address LIKE ?', "%#{params[:area]}%").where(['name LIKE (?) OR description LIKE(?)', "%#{params[:name]}%", "%#{params[:name]}%"])
   end
 
-  # 予約一覧
-  def reservations
-    @reservations = UserRoom.where(user_id: current_user.id)
+  
+    # ログインが必要な物
 
-#    @reservations.each_with_index do |reservation, i|
- #     reservation['room'] = Room.find(reservation.room_id)
-  #    reservations[i] = reservation # 代入
-      # rooms.push(Room.find(id: reservation.room_id)) # 予約レコードを元に、部屋情報を配列に格納
-   # end
-    # @rooms = rooms
-  end
+    # 登録した部屋一覧
+    def post
+      if !user_signed_in?
+        redirect_to "/users/sign_in" # isnot login 
+      else
+        @rooms = Room.where(user_id: current_user.id)
+        # @rooms = current_user.rooms #リレーション読み込みできない?
+      end
+    end
+
+    # 予約一覧
+    def reservations
+      if !user_signed_in?
+        redirect_to "/users/sign_in" # isnot login 
+      else
+        @reservations = UserRoom.where(user_id: current_user.id)
+      end
+    end
+
+
 
 
   private
