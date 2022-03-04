@@ -8,7 +8,6 @@ class RoomsController < ApplicationController
       redirect_to "/users/sign_in"
     else
       @room = Room.new
-      @user = current_user
     end
   end
  
@@ -16,7 +15,7 @@ class RoomsController < ApplicationController
     @room = Room.new(def_params)
 	  if @room.save
 	    flash[:notice] = "新規登録しました"
-	    redirect_to :rooms
+	    redirect_to @room
 	  else
 	    render "new"
 	  end
@@ -75,7 +74,7 @@ class RoomsController < ApplicationController
       if !user_signed_in?
         redirect_to "/users/sign_in" # isnot login 
       else
-        @reservations = UserRoom.where(user_id: current_user.id)
+        @reservations = UserRoom.where(user_id: current_user.id).order(:date_start)
       end
     end
 
@@ -85,7 +84,7 @@ class RoomsController < ApplicationController
   private
     # create,updateの共通パラメータ（ストロング）
     def def_params
-      params.require(:room).permit(:address, :name, :description, :price, :user_id)
+      params.require(:room).permit(:address, :name, :description, :image, :price, :user_id)
     end
 
 end

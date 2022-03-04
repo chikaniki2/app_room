@@ -23,13 +23,27 @@
     <% @rooms.each do |room| %>
       <div class="col">
 	      <a href="/rooms/<%= room.id %>" class="card h-100">
-  	      <img src="/assets/slideshow_01_s.jpg" alt="roomthum" class="card-img-top">
+          <% if room.image? %>
+            <% imgsrc = room.image.url %>
+          <% else %>
+            <% imgsrc = "/assets/slideshow_01_s.jpg" %>
+          <% end %>
+          <img src="<%= imgsrc %>" alt="roomthum" class="card-img-top">
 	        <div class="card-body">
   	        <h5 class="card-title"><%= room.name %></h5>
 		        <p class="card-text room-address"><%= room.address %></p>
 		        <p class="card-text"><%= room.description %></p>
             <p class="card-text">1泊1人あたり:<%= room.price.to_s(:delimited) %>円</p>
-            <p class="card-text room-address">登録者：<%= room.user_id %></p>
+            <p class="card-text room-address">登録者：
+              <% user = User.find(room.user_id) %>
+              <% if user.image? %>
+                <% iconsrc = user.image.thumb.url %>
+              <% else %>
+                <% iconsrc = "/assets/default_icon.jpg" %>
+              <% end %>
+              <img src="<%= iconsrc %>" alt="ユーザーアイコン" width="20px">
+              <%= user.name %>
+            </p>
 	        </div>
 	      </a>
 	    </div>

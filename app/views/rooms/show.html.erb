@@ -1,4 +1,7 @@
 <div id="main">
+  <% if  flash[:notice] %>
+    <div class="alert alert-success"><%= flash[:notice] %></div>
+  <% end %>
   <% if flash[:alert] %>
     <ul class="alert alert-danger">
       <% flash[:alert].each do |alert| %>
@@ -12,7 +15,14 @@
 
   <div class="row">
     <div class="col">
-      <img class="img-fluid pb-3" src="/assets/slideshow_01_s" alt="roomimage">
+
+      <% if @room.image? %>
+            <% imgsrc = @room.image.url %>
+          <% else %>
+            <% imgsrc = "/assets/slideshow_01_s.jpg" %>
+          <% end %>
+      <img src="<%= imgsrc %>" alt="roomimage" class="img-fluid pb-3">
+
 	    <p>1泊1人あたり:<%= @room.price.to_s(:delimited) %>円</p>
       <p><%= @room.description %></p>
 	  </div>

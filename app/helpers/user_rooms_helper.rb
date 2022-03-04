@@ -1,2 +1,0 @@
-module UserRoomsHelper
-end

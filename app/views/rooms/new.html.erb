@@ -7,6 +7,22 @@
       <div class="w-75 m-auto text-start">
 
         <div class="row pb-4">
+          <div class="ps-0 pb-1">
+            <%= f.label :image,"部屋の写真", class:"pe-2" %>
+            <span class="badge bg-secondary">任意</span>
+          </div>
+          <%= f.file_field :image, id:"user_img", class: "form-control" %>
+        </div>
+        <div class="row pb-4">
+          <% if @room.image.present? %>
+            <%= image_tag @room.image, id: :img_prev %>
+          <% else %>
+            <img id="img_prev" src="/assets/default_room.jpg">
+          <% end %>
+          <%= f.hidden_field :image_cache %>
+        </div>
+
+        <div class="row pb-4">
           <div class="ps-0">
             <%= f.label :address ,"住所", class: "pe-2" %>
             <span class="badge bg-danger">必須</span>
@@ -38,7 +54,7 @@
           <%= f.number_field :price, class: "form-control" %>
         </div>
         
-        <%= f.hidden_field :user_id, value:@user.id %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
 
         <div class="row pb-5">
           <%= f.submit "新規登録する",  class: "btn btn-primary" %>
@@ -48,3 +64,5 @@
     <% end %>
   </div>
 </div>
+
+<%= javascript_pack_tag 'imagepreview' %>

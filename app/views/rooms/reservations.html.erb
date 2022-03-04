@@ -1,17 +1,16 @@
 <div id="main">
   <% if flash[:notice] %>
-    <div class="alert alert__success"><%= flash[:notice] %></div>
+    <div class="alert alert-success"><%= flash[:notice] %></div>
   <% elsif flash[:alert]%>
-    <div class="alert alert__delete"><%= flash[:alert] %></div>
+    <div class="alert alert-denger"><%= flash[:alert] %></div>
   <% end %>
   
   <h2>予約一覧</h2>
-# 予約順に並べる
   <% if @reservations.size == 0 %>
     <p>現在登録はありません</p>
   <% end %>
 
-  <div class="row row-cols-4 roomlist">
+  <div class="row row-cols-3 roomlist">
     <% @reservations.each do |reservation| %>
       <% room = Room.find_by(id: reservation.room_id) %>
         <%
@@ -25,7 +24,12 @@
         %>
       <div class="col">
         <div class="card h-100">
-          <img src="/assets/slideshow_01_s.jpg" alt="" class="card-img-top">
+          <% if room.image? %>
+            <% imgsrc = room.image.url %>
+          <% else %>
+            <% imgsrc = "/assets/slideshow_01_s.jpg" %>
+          <% end %>
+          <img src="<%= imgsrc %>" alt="roomthum" class="card-img-top">
           <div class="card-body">
             <h5 class="card-title"><%= room_name %></h5>
             <p class="card-text room-address"><%= room_address %></p>
@@ -34,8 +38,10 @@
               <%= (reservation.date_end.to_date - reservation.date_start.to_date).to_i %>泊：
               <%= reservation.price.to_s(:delimited) %>円
             </p>
-            <p class="card-text">チェックイン：<%= reservation.date_start.to_s(:datetime_jp_t) %><br>
-            チェックアウト：<%= reservation.date_end.to_s(:datetime_jp_t) %></p>
+            <p class="card-text">
+              チェックイン：<%= reservation.date_start.strftime("%Y年%m月%d日") %><br>
+              チェックアウト：<%= reservation.date_end.strftime("%Y年%m月%d日") %>
+            </p>
           </div>
           <div class="card-body">
             <%= link_to "部屋詳細", room, class: "card-link" %>

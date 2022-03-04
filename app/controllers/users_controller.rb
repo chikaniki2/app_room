@@ -1,11 +1,19 @@
 class UsersController < ApplicationController
 
   def profile
-    @user = current_user
+    if !user_signed_in?
+      redirect_to "/users/sign_in" # isnot login 
+    else
+      @user = current_user
+    end
   end
 
   def account
-    @user = current_user
+    if !user_signed_in?
+      redirect_to "/users/sign_in" # isnot login 
+    else
+      @user = current_user
+    end
   end
  
   def update
@@ -21,6 +29,6 @@ class UsersController < ApplicationController
 
   private
     def def_params
-      params.require(:user).permit(:name, :description)
+      params.require(:user).permit(:name, :description, :image)
     end
 end

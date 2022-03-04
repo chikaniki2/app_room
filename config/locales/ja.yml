@@ -1,0 +1,22 @@
+ja:
+  activerecord:
+    models:
+      user: "ユーザー"
+      room: "部屋"
+      user_room: "予約"
+  attributes:
+    user:
+      name: "名前"
+      email: "メールアドレス"
+      password: "パスワード"
+      description: "自己紹介"
+    room:
+      name: "部屋名"
+      description: "紹介"
+      address: "住所"
+      price: "価格"
+    user_room:
+      date_start: "チェックイン"
+      date_end: "チェックアウト"
+      price: "宿泊費"
+      member: "宿泊人数"
