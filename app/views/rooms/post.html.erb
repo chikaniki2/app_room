@@ -1,0 +1,34 @@
+<div id="main">
+  <h2>登録した部屋一覧</h2>
+
+  <div class="row row-cols-4 roomlist">
+
+    <% if @rooms.size == 0 %>
+      <p>現在登録はありません</p>
+    <% end %>
+
+    <% @rooms.each do |room| %>
+      <div class="col">
+        <div class="card h-100">
+          <% if room.image? %>
+            <% imgsrc = room.image.url %>
+          <% else %>
+            <% imgsrc = "/assets/slideshow_01_s.jpg" %>
+          <% end %>
+          <img src="<%= imgsrc %>" alt="roomthum" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title"><%= room.name %></h5>
+            <p class="card-text room-address"><%= room.address %></p>
+            <p class="card-text"><%= room.description %></p>
+            <p class="card-text">1泊1人あたり:<%= room.price.to_s(:delimited) %>円</p>
+          </div>
+          <div class="card-body">
+            <%= link_to "確認", room, class: "card-link" %>
+            <%= link_to "削除", room, method: :delete, data: { confirm: "本当に削除しますか？" } , class: "card-link"%>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+</div>

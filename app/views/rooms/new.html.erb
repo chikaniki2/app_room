@@ -1,0 +1,68 @@
+<div id="main">
+  <div id="pannel_center" class="pannel_e">
+    <h4 class="pb-4">部屋を登録する</h4>
+
+    <%= form_with model: @room, local: true do |f| %>
+      <%#=render "shared/error", obj: @room %>
+      <div class="w-75 m-auto text-start">
+
+        <div class="row pb-4">
+          <div class="ps-0 pb-1">
+            <%= f.label :image,"部屋の写真", class:"pe-2" %>
+            <span class="badge bg-secondary">任意</span>
+          </div>
+          <%= f.file_field :image, id:"user_img", class: "form-control" %>
+        </div>
+        <div class="row pb-4">
+          <% if @room.image.present? %>
+            <%= image_tag @room.image, id: :img_prev %>
+          <% else %>
+            <img id="img_prev" src="/assets/default_room.jpg">
+          <% end %>
+          <%= f.hidden_field :image_cache %>
+        </div>
+
+        <div class="row pb-4">
+          <div class="ps-0">
+            <%= f.label :address ,"住所", class: "pe-2" %>
+            <span class="badge bg-danger">必須</span>
+          </div>
+          <%= f.text_field :address, class: "form-control" %>
+        </div>
+
+        <div class="row pb-4">
+          <div class="ps-0">
+            <%= f.label :name ,"部屋名", class: "pe-2" %>
+            <span class="badge bg-danger">必須</span>
+          </div>
+          <%= f.text_field :name, class: "form-control" %>
+        </div>
+
+        <div class="row pb-4">
+          <div class="ps-0">
+            <%= f.label :description ,"紹介文", class: "pe-2" %>
+            <span class="badge bg-danger">必須</span>
+          </div>
+          <%= f.text_area :description, class: "form-control" %>
+        </div>
+        
+        <div class="row pb-4">
+          <div class="ps-0">
+            <%= f.label :price ,"1人あたりの価格", class: "pe-2" %>
+            <span class="badge bg-danger">必須</span>
+          </div>
+          <%= f.number_field :price, class: "form-control" %>
+        </div>
+        
+        <%= f.hidden_field :user_id, value: current_user.id %>
+
+        <div class="row pb-5">
+          <%= f.submit "新規登録する",  class: "btn btn-primary" %>
+        </div>
+
+     </div>
+    <% end %>
+  </div>
+</div>
+
+<%= javascript_pack_tag 'imagepreview' %>

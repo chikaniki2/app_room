@@ -1,0 +1,70 @@
+
+<div id="account">
+  <div class="row h-100">
+
+    <div class="col-2 pannel_e">
+		  <a href="/users/account/" class="profile-menu">アカウント</a>
+		  <a href="/users/profile/" class="profile-menu profile-menu_active">プロフィール</a>
+	  </div>
+	
+    <div class="col-4">
+      <div class="row p-2 pt-5">
+        <h3>プロフィール</h3>
+      </div>
+      
+      <% if  flash[:notice] %>
+        <div class="alert alert-success"><%= flash[:notice] %></div>
+      <% elsif flash[:alert] %>
+        <div class="alert alert-danger"><%= flash[:alert] %></div>
+      <% end %>
+
+      <%= form_with model: @user, local: true do |f| %>
+        
+        <div class="row p-3">
+          <div class="col">
+            <%= f.label :image,"アイコン", class:"pe-2" %>
+            <span class="badge bg-secondary">任意</span>
+          </div>
+          <div class="col-8">
+            <%= f.file_field :image, id:"user_img", class: "form-control" %>
+            <% if @user.image? %>
+              <%= image_tag @user.image.url ,id: "img_prev"%>
+            <% else %>
+              <img id="img_prev" src="/assets/default_icon.jpg">
+            <% end %>
+            <%= f.hidden_field :image_cache %>
+          </div>
+        </div>
+
+        
+        <div class="row p-3">
+          <div class="col">
+            <%= f.label :name ,"名前" %>
+            <span class="badge bg-danger">必須</span>
+          </div>
+          <div class="col-8">
+            <%= f.text_field :name ,value:@user.name,  class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="row p-3">
+          <div class="col">
+            <%= f.label :description ,"自己紹介" %>
+            <span class="badge bg-danger">必須</span>
+          </div>
+          <div class="col-8">
+            <%= f.text_area :description, value:@user.description, class:'form-control' %>
+          </div>
+        </div>
+
+        <div class="row p-3">
+          <div class="col">
+            <%= f.submit "更新する", class: "btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= javascript_pack_tag 'imagepreview' %>

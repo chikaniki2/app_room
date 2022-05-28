@@ -1,0 +1,102 @@
+<div id="slideshow" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-touch="false">
+  <% if  flash[:notice] %>
+    <div class="alert alert-success"><%= flash[:notice] %></div>
+  <% end %>
+
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="5000">
+	  <img src="/assets/slideshow_01.jpg" alt="スライド画像" class="d-block w-100">
+	</div>
+	<div class="carousel-item" data-bs-interval="5000">
+	  <img src="/assets/slideshow_02.jpg" alt="スライド画像" class="d-block w-100">
+	</div>
+	<div class="carousel-item" data-bs-interval="5000">
+	  <img src="/assets/slideshow_03.jpg" alt="スライド画像" class="d-block w-100">
+	</div>
+  </div>
+  <div id="slideshow_logo">
+    <div class="slideshow_logo_title">KASHI × KARI</div>
+	    <p class="slideshow_logo_desc">部屋と人をつなぐプラットフォーム</p>
+      <%= form_with url: search_rooms_path, method: :get, local: true do |f| %>
+        <div class="row  align-items-center pb-4">
+          <div class="col-auto p-1">
+            <%= f.text_field :area, placeholder: "エリア", class: "form-control" %>
+          </div>
+          <div class="col-auto p-1">
+            <%= f.text_field :name, placeholder: "キーワード", class: "form-control"%>
+          </div>
+          <div class="col-auto p-1">
+            <%= f.submit "検索", class: "btn btn-primary"%>
+          </div>
+        </div>  
+      <% end %>
+  </div>
+</div>
+
+
+<div id="main">
+  <div>
+    <h3>おすすめエリア</h3>
+	  <div class="row row-cols-3 pb-5">
+	    <div class="col">
+	      <a class="card" href="/rooms/search?area=東京&name=">
+		    <img src="/assets/slideshow_01_s.jpg" alt="" class="card-img-top">
+		    <div class="card-body">
+		      <h5>東京</h5>
+		    </div>
+		  </a>
+		</div>
+		
+		<div class="col">
+		  <a class="card" href="/rooms/search?area=沖縄&name=">
+  		    <img src="/assets/slideshow_03_s.jpg" alt="" class="card-img-top">
+		    <div class="card-body">
+  		      <h5>沖縄</h5>
+		    </div>
+		  </a>
+		</div>
+		
+		<div class="col">
+		  <a class="card" href="/rooms/search?area=北海道&name=">
+		    <img src="/assets/slideshow_02_s.jpg" alt="" class="card-img-top">
+		    <div class="card-body">
+		      <h5>北海道</h5>
+		    </div>
+		  </a>
+		</div>
+
+	  </div>
+  </div>
+  
+  <div>
+    <h3>人気のキーワード</h3>
+    <div class="row row-cols-3 pb-5">
+	    <div class="col">
+	      <a class="card" href="/rooms/search?area=&name=海が見える">
+		      <img src="/assets/slideshow_03_s.jpg" alt="" class="card-img-top">
+		      <div class="card-body">
+  		      <h5>海が見える</h5>
+	  	    </div>
+		    </a>
+		  </div>
+		
+      <div class="col">
+        <a class="card" href="/rooms/search?area=&name=山の中">
+          <img src="/assets/slideshow_02_s.jpg" alt="" class="card-img-top">
+          <div class="card-body">
+            <h5>山の中</h5>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col">
+        <a class="card" href="/rooms/search?area=&name=夜景が綺麗">
+          <img src="/assets/slideshow_01_s.jpg" alt="" class="card-img-top">
+          <div class="card-body">
+            <h5>夜景が綺麗</h5>
+            </div>
+        </a>
+      </div>
+	  </div>
+  </div>
+</div>

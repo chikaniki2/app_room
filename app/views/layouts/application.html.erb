@@ -8,9 +8,81 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
   </head>
 
   <body>
+    <header class="container-fluid bg-secondary row align-items-center">
+      <a href="/" id="header_logo" class="col-auto">KASHI × KARI</a>
+      
+      <%= form_with url: search_rooms_path, method: :get, local: true ,class: "col row  align-items-center" do |f| %>
+        <div class="col-auto p-1">
+          <%= f.text_field :area, placeholder: "エリア", class: "form-control" %>
+        </div>
+        <div class="col-auto p-1">
+          <%= f.text_field :name, placeholder: "キーワード", class: "form-control"%>
+        </div>
+        <div class="col-auto p-1">
+          <%= f.submit "検索", class: "btn btn-primary"%>
+        </div>
+      <% end %>
+
+      <div class="col-auto offset-12">
+        <% if !user_signed_in? %>
+          <%= link_to "ログイン", new_user_session_path, class: 'btn btn-primary' %>
+          <%= link_to "新規登録", new_user_registration_path, class: 'btn btn-success' %>
+        <% else %>
+          <!--ハンバーガーメニュー-->
+          <nav class="headerNav">
+            <ul class="navList">
+              <li class="navItem">
+                <a href="/rooms/new/">
+                  部屋を登録する
+                </a>
+              </li>
+              <li class="navItem">
+                <a href="/rooms/post/">
+                  登録した部屋一覧
+                </a>
+              </li>
+              <li class="navItem">
+                <a href="/rooms/reservations/">
+                  予約を確認する
+                </a>
+              </li>
+              <li class="navItem">
+                <a href="/users/account/">
+                  ログイン情報編集
+                </a>
+              </li>
+              <li class="navItem">
+                <a href="/users/profile/">
+                  プロフィール編集
+                </a>
+              </li>
+              <li class="navItem">
+                <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- ハンバーガーボタン -->
+          <div class="hamburger_btn" id="js-hamburger">
+            <span class="hamburger_line hamburger_line_1"></span>
+            <span class="hamburger_line hamburger_line_2"></span>
+            <span class="hamburger_line hamburger_line_3"></span>
+          </div>
+          <!--ハンバーガーメニュー-->
+          </div>
+        <% end # if login end %>
+    </header>
+
     <%= yield %>
+
+    <footer class="bg-secondary">(C) CHIKA</footer>
+    
+    <%= javascript_pack_tag 'hamburger' %>
   </body>
 </html>

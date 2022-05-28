@@ -1,0 +1,34 @@
+<div id="account">
+  <div class="row h-100">
+
+    <div class="col-2 pannel_e">
+		<a href="/users/account/" class="profile-menu profile-menu_active">アカウント</a>
+		<a href="/users/profile/" class="profile-menu">プロフィール</a>
+	</div>
+	
+	<div class="col-3">
+	  <div class="row p-2 pt-4">
+	    <h3>アカウント</h3>
+	  </div>
+
+      <% if  flash[:notice] %>
+        <p class="alert alert-success"><%= flash[:notice] %>
+      <% end %>
+
+    <div class="row p-3">
+	    <div class="col">メールアドレス</div>
+			<div class="col"><%= @user.email  %></div>
+	  </div>
+	  <div class="row p-3">
+	    <div class="col">パスワード</div>
+	    <div class="col">*******</div>
+	  </div>
+	  <div class="row p-3">
+	    <div class="col">
+        <%= link_to "編集", "/users/edit", class: "btn btn-primary" %>
+	    </div>
+      </div>
+    </div>
+  </div>
+
+</div>
