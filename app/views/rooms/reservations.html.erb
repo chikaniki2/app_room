@@ -4,7 +4,7 @@
   <% elsif flash[:alert]%>
     <div class="alert alert-denger"><%= flash[:alert] %></div>
   <% end %>
-  
+
   <h2>予約一覧</h2>
   <% if @reservations.size == 0 %>
     <p>現在登録はありません</p>
@@ -12,8 +12,8 @@
 
   <div class="row row-cols-3 roomlist">
     <% @reservations.each do |reservation| %>
-      <% room = Room.find_by(id: reservation.room_id) %>
-        <%
+      <% room = reservation.room %>
+      <%
         if room != nil
           room_name = room.name
           room_address = room.address
@@ -50,5 +50,7 @@
         </div>
       </div>
     <% end #each end %>
-  </div><!--roomlist end-->
-</div><!--main end-->
+  </div>
+  <!--roomlist end-->
+</div>
+<!--main end-->
